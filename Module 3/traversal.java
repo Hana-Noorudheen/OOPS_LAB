@@ -1,149 +1,89 @@
 import java.io.*;
-import java.util.*;
 
-class Node {
-  int data;
-  Node lchild;
-  Node rchild;
+class post_evln {
 
-  public Node(int d) {
-    data = d;
-    lchild = rchild = null;
-  }
+    private int max;
+   private int[] arr;
+   private int top;
 
-  public void displayNode() {
-    System.out.println(data);
-  }
+   private int a;
+   private int b;
+   private int r;
+   public post_evln(int s){
+       max=s;
+       arr= new int[max];
+       top=-1;
+   }
+
+
+public void push(int item) {
+    top++;
+    arr[top]=item;
+    //arr[++top]; 
 }
 
-class Tree {
-  public Node root;
+public int pop() {
+    int item = arr[top];
+    top--;
+    return item;
+    //return arr[top--];
+}
 
-  public Tree() {
-    root = null;
-  }
 
-  // insert
-  public void insert(int d) {
-    Node newNode = new Node(d);
-    if (root == null) {
-      root = newNode;
-    } else {
-      Node cur = root;
-      Node parent;
-      while (true) {
-        parent = cur;
-        if (d < cur.data) {
-          cur = cur.lchild;
-          if (cur == null) {
-            parent.lchild = newNode;
-            return;
-          }
-        } else {
-          cur = cur.rchild;
-          if (cur == null) {
-            parent.rchild = newNode;// equal values in right side
-            return;
-          }
+public void evaluvation(char x)
+{
+
+    if (x=='+'||x=='-'||x=='*'||x=='/'||x=='$')
+    {
+        a=pop();
+        b=pop();
+        
+        switch(x)
+        {
+            case '+': push(b+a);
+            break;
+            case '-': push(b-a);
+            break;
+            case  '*': push(b*a);
+            break;
+            case '/' : push(b/a);
+            break;
+            case '$' :push((int) Math. round(Math.pow(b, a)));
+            break;
+          
         }
-      }
-
     }
-
-  }
-
-  // search
-  public void search(int key) {
-    Node current = root;
-    while (current.data != key) {
-      if (key < current.data)
-        current = current.lchild;
-      else
-        current = current.rchild;
-    }
-    if (current == null)
-      System.out.println("ELEMENT NOT FOUND!!");
     else
-      current.displayNode();
-
-  }
-
-  // recursive traversal
-  public void traversal() {
-    System.out.println("INORDER TRAVERSAL");
-    inOrder(root);
-    System.out.println("PREORDER TRAVERSAL");
-    preOrder(root);
-    System.out.println("POSTORDER TRAVERSAL");
-    postOrder(root);
-  }
-
-  // Inorder(LDR)
-  public void inOrder(Node localRoot) {
-
-    if (localRoot != null) {
-      inOrder(localRoot.lchild);
-      localRoot.displayNode();
-      inOrder(localRoot.rchild);
+    {
+        int a=Integer.parseInt(String.valueOf(x));
+        push(a);
     }
-  }
 
-  // preorder(DLR)
-  public void preOrder(Node localRoot) {
-    if (localRoot != null) {
-      localRoot.displayNode();
-      preOrder(localRoot.lchild);
-      preOrder(localRoot.rchild);
-
-    }
-  }
-
-  // postorder(LRD)
-  public void postOrder(Node localRoot) {
-    if (localRoot != null) {
-      postOrder(localRoot.lchild);
-      postOrder(localRoot.rchild);
-      localRoot.displayNode();
-    }
-  }
 }
 
-class traversal {
+    public static void main(String args[])throws IOException
+    {
+        String str;
+        int l,i,result;
 
-  public static void main(String[] args) {
-    int x, data;
-    Tree obj = new Tree();
-    Scanner sc = new Scanner(System.in);
-    System.out.println("TREE");
+        InputStreamReader read=new InputStreamReader(System.in);
+        BufferedReader in=new BufferedReader(read);
+        System.out.println("Enter the Postfix String");
 
-    do {
-      System.out.println("1.INSERT");
-      System.out.println("2.TREE TRAVERSAL");
-      System.out.println("3.SEARCH");
 
-      x = sc.nextInt();
-      switch (x)
+       // x = Integer.parseInt(in.readLine());
+        str=in.readLine();
+        l = str.length();
 
-      {
-        case 1:
-          System.out.println("Enter element to be inserted");
-          data = sc.nextInt();
-          obj.insert(data);
-          break;
-        case 2:
-          obj.traversal();
-          break;
-        case 3:
-          System.out.println("Enter element to be searched");
+        post_evln obj = new post_evln(l);
 
-          data = sc.nextInt();
-          obj.search(data);
+        for(i=0;i<l;i++)
+            obj.evaluvation(str.charAt(i));
+        
+        result = obj.pop();
+         
+        System.out.println(result);
 
-        default:
-          System.out.println("Invalid Input");
-      }
 
-    } while (x == 1 || x == 2);
-  }
-
+    }
 }
