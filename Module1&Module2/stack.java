@@ -5,8 +5,7 @@ class ourstack {
    private int[] arr;
    private int top;
 
-   public ourstack(int s)
-   {
+   public ourstack(int s){
        max=s;
        arr= new int[max];
        top=-1;
@@ -27,7 +26,7 @@ public int pop() {
 }
 
 public int peek() {
-     return arr[top];
+    return arr[top];
 }
 
 public boolean isFull() {
@@ -48,7 +47,7 @@ class stack{
     public static void main( String s[]) 
 throws IOException
  {
- ourstack st=new ourstack(20);//object creation
+ ourstack st=new ourstack(20);
  st.push(56); 
  st.push(33);
  int value=st.pop();
